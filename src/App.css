@@ -1,38 +1,164 @@
-.App {
-  text-align: center;
+@import url("https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Hanken+Grotesk:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Manrope:wght@200..800&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap");
+/* @import '~bootstrap/scss/bootstrap'; */
+/* @import "../node_modules/bootstrap/scss/bootstrap";
+@import "../node_modules/bootstrap/scss/functions"; */
+
+:root {
+  --bgColor: #fafeff;
+  --border: #e4e5e9;
+  --textdark: #344054;
+  --textprimary: #20294c;
+  --textLight: #8d91a3;
+  --iconColor: #8d91a3;
+  --hoverColor: #e9eaed;
+  --purple: #c58fff;
+  --success: #66cb9f;
+  --successLight: #e0f5ec;
+  --danger: #f58787;
+  --dangerLight: #fde7e7;
+  --warning: #f7936f;
+  --warningLight: #fde9e2;
+  --blue: #4dc4ff;
+  --blueLight: #dbf3ff;
+  --pending: #c58fff;
+  --pendingLight: #c58fff54;
+  --darkSucess: #007656;
+
+  --box-shadow: 0 0px 4px rgba(0, 0, 0, 0.1);
+  --modal-backdrop-bg: rgba(52, 64, 84, 0.3);
+  --cardBorderRadius: 10px;
+  --inputRadius: 2px;
+  --btnRadius: 2px;
+  --fs14: 14px;
+  --fs13: 13px;
+  --fs12: 12px;
+}
+* {
+  font-family: "Manrope", sans-serif;
+}
+body {
+  overflow-x: hidden;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+::-webkit-scrollbar {
+  width: 5px;
+  height: 3px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(204, 25, 25, 0);
+}
+
+::-webkit-scrollbar-thumb {
+  /* // background: #a8aab730; */
+  background: #20294c57;
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(248, 241, 241, 0);
+  border-right: 7px solid rgba(0, 0, 0, 0.01);
+}
+
+/* // ----------------------------------For dropdown Customizations------------------------------ */
+.dropdown-menu.show {
+  box-shadow: var(--box-shadow);
+  border-radius: 2px;
+}
+
+.dropdownTitle {
+  background: transparent !important;
+  border: none !important;
+  padding: 0% !important;
+  color: var(--textLight) !important;
+}
+
+.dropdown_with_border {
+  background: transparent !important;
+  border: 1px solid var(--border) !important;
+  width: 100% !important;
+  border-radius: 0px !important;
+  color: var(--textLight) !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
+
+/* .dropdown-toggle::after {
+  border: none !important;
+  display: none !important;
+} */
+
+.dropdownBorder .dropdown-css.dropdown-menu {
+  width: 100% !important;
+}
+
+.dropdown-css.dropdown-menu {
+  margin-top: 5px !important;
+  border: none !important;
+  padding: 0px !important;
+  font-style: normal;
+  font-weight: 700;
+  font-size: var(----fs14);
+  line-height: 26px;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+  background-color: var(--textprimary) !important;
+}
+
+/* // ----------------------------------For dropdown Customizations------------------------------ */
+.card-feild {
+  height: 80vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.side-bar-card {
+  box-shadow: var(--box-shadow);
+  border-radius: 10px;
+  width: 100%;
+  height: 200px;
+  cursor: pointer;
+}
+@media only screen and (min-width: 240px) and (max-width: 768px) {
+  .side-bar-card {
+    height: 100%;
   }
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.side-bar-card img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: top;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+.side-bar-card:hover {
+  border: 4px solid var(--danger);
+  box-shadow: var(--box-shadow);
+}
+.side-bar-card.active {
+  border: 4px solid var(--danger);
+  box-shadow: var(--box-shadow);
+}
+.upload-card {
+  border: 1px solid var(--border);
+  /* box-shadow: var(--box-shadow); */
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 500px;
+  height: 500px;
+}
+.image_uploaded {
+  position: absolute;
+  font-size: 40px;
+  left: 0px;
+  top: 0px;
+  opacity: 0;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.upload-card img {
+  object-fit: contain;
+  object-position: top;
 }
