@@ -1,10 +1,12 @@
-import React, { ReactNode, useEffect, useMemo, useState } from "react";
+import React, { ReactNode, useMemo, useState } from "react";
 import { api } from "../api";
 
 interface DashboardContextInterface {
   handleModals: Function;
   uploadGarments: Function;
   getOrders: Function;
+  setActiveSection: (data: string) => void;
+  activeScection: string;
 }
 
 const DashboardContext = React.createContext<DashboardContextInterface | null>(
@@ -16,6 +18,8 @@ interface ListDashboardProviderProps {
 }
 
 const DashboardProvider = ({ children }: ListDashboardProviderProps) => {
+  const [activeScection, setActiveSection] = useState("1");
+
   const handleModals = async () => {
     try {
       let response = await api?.getModels();
@@ -44,8 +48,10 @@ const DashboardProvider = ({ children }: ListDashboardProviderProps) => {
       handleModals,
       uploadGarments,
       getOrders,
+      setActiveSection,
+      activeScection,
     }),
-    []
+    [activeScection]
   );
 
   return (

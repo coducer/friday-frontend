@@ -1,18 +1,26 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { useDashboards } from "../DashboardProvider";
 import { Button } from "react-bootstrap";
 import { MdRestore } from "react-icons/md";
 import { FaArrowRightLong } from "react-icons/fa6";
 
-const ImageUploader = ({ activeModalId }: { activeModalId: any }) => {
+const ImageUploader = ({
+  activeModalId,
+  selectedModalId,
+}: {
+  activeModalId: any;
+  selectedModalId: string;
+}) => {
   const context = useDashboards();
   const [imageUrl, setImageUrl] = useState("");
+  const [loader, setLoader]: [boolean, Function] = useState(false);
   const fileInputRef = useRef(null);
   const [orderId, setOrderId]: [string, Function] = useState("");
   const [orderStatus, setOrderStatus]: [string, Function] = useState("");
 
   const handleImageUpload = async (event: any) => {
+    setLoader(true);
     const formData = new FormData();
     formData.set("file", event.target.files[0]);
     formData.set("model", activeModalId?.id);
@@ -21,11 +29,10 @@ const ImageUploader = ({ activeModalId }: { activeModalId: any }) => {
 
     try {
       let response = await context?.uploadGarments(formData);
-      console.log(response?.data?.id, response, "adsagdjsagdjh");
-
       if (response?.status) {
         setOrderId(response?.data?.data?.id);
         handleGetOrders(response?.data?.data?.id);
+        setLoader(false);
       }
     } catch (error) {}
   };
@@ -37,11 +44,8 @@ const ImageUploader = ({ activeModalId }: { activeModalId: any }) => {
         setOrderStatus(response?.order?.status);
         setImageUrl(response?.order?.garment_url);
       }
-      console.log(response?.order?.garment_url, "dsjadgasgdasj");
     } catch (error) {}
   };
-
-  console.log(imageUrl, "imageUrlimageUrlimageUrl");
 
   // function getOrdersInterval(id: string) {
   //   return function () {
@@ -64,14 +68,16 @@ const ImageUploader = ({ activeModalId }: { activeModalId: any }) => {
                 <AiOutlineCloudUpload size={40} color="var(--iconColor)" />
               </h6>
               <div className=" fw-semibold btn btn-primary  overflow-hidden position-relative">
-                Upload File
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageUpload}
-                  ref={fileInputRef}
-                  className="image_uploaded"
-                />
+                <Button disabled={selectedModalId ? false : true}>
+                  Upload File
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    ref={fileInputRef}
+                    className="image_uploaded"
+                  />
+                </Button>
               </div>
             </>
           )}
@@ -82,20 +88,31 @@ const ImageUploader = ({ activeModalId }: { activeModalId: any }) => {
           </div>
         )}
       </div>
-      <div className=" d-flex mt-3">
-        <Button className=" me-3" variant="outline-danger">
-          <span className=" me-2">
-            <MdRestore size={20} />
-          </span>
-          Restore
-        </Button>
-        <Button variant="outline-success">
-          Go to next
-          <span className=" ms-2">
-            <FaArrowRightLong size={20} />
-          </span>
-        </Button>
-      </div>
+      {imageUrl && (
+        <>
+          <div className=" d-flex mt-3">
+            <Button
+              className=" me-3"
+              variant="outline-danger"
+              onClick={() => setImageUrl("")}
+            >
+              <span className=" me-2">
+                <MdRestore size={20} />
+              </span>
+              Restore
+            </Button>
+            <Button
+              variant="outline-success"
+              onClick={() => context?.setActiveSection("1")}
+            >
+              Go to next
+              <span className=" ms-2">
+                <FaArrowRightLong size={20} />
+              </span>
+            </Button>
+          </div>
+        </>
+      )}
     </div>
   );
 };

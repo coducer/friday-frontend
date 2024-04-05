@@ -3,11 +3,18 @@ import { api } from "../../api";
 import { useEffect, useState } from "react";
 import { useDashboards } from "../DashboardProvider";
 
-function Modals({ setActiveModalId }: { setActiveModalId: Function }) {
+function Modals({
+  setActiveModalId,
+  setSelectedModalId,
+  selectedModalId,
+}: {
+  setActiveModalId: Function;
+  setSelectedModalId: Function;
+  selectedModalId: string;
+}) {
   const context = useDashboards();
 
   const [modals, setModals] = useState([]);
-  const [selectedModalId, setSelectedModalId] = useState("");
 
   const getModalDetails = async () => {
     try {
@@ -26,7 +33,7 @@ function Modals({ setActiveModalId }: { setActiveModalId: Function }) {
 
   const handleModalClick = (id: string, detail: {}) => {
     setActiveModalId((prevId: any) => (prevId === id ? "" : detail));
-    setSelectedModalId((prevId) => (prevId === id ? "" : id));
+    setSelectedModalId((prevId: any) => (prevId === id ? "" : id));
   };
 
   return (
