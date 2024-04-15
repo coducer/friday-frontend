@@ -74,4 +74,5 @@ export const api = {
   },
 
   getOrder: (id: any) => get(`${BASE_URL}/order/${id}`),
+  tryonupdate: (id: any) => get(`${BASE_URL}/order/tryonupdate/${id}`),
 };

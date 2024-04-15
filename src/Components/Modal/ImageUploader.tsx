@@ -17,10 +17,10 @@ const ImageUploader = ({
   const [loader, setLoader]: [boolean, Function] = useState(false);
   const fileInputRef = useRef(null);
   const [orderId, setOrderId]: [string, Function] = useState("");
-  const [orderStatus, setOrderStatus]: [string, Function] = useState("");
+  const [orderTryonUrl, setOrderTryonUrl]: [string, Function] = useState("");
+  const [intervalId, setIntervalId]: [any, Function] = useState(null);
 
   const handleImageUpload = async (event: any) => {
-    setLoader(true);
     const formData = new FormData();
     formData.set("file", event.target.files[0]);
     formData.set("model", activeModalId?.id);
@@ -29,35 +29,81 @@ const ImageUploader = ({
 
     try {
       let response = await context?.uploadGarments(formData);
-      if (response?.status) {
+
+      if (response?.data?.status) {
         setOrderId(response?.data?.data?.id);
         handleGetOrders(response?.data?.data?.id);
-        setLoader(false);
       }
     } catch (error) {}
   };
 
   const handleGetOrders = async (id: string) => {
+    setLoader(true);
+
     try {
       let response = await context?.getOrders(id);
+
       if (response?.order) {
-        setOrderStatus(response?.order?.status);
+        handleGetOrderstryonupdate(id);
+        if (response?.order?.tryon_url !== null) {
+          setLoader(false);
+          // clearInterval(intervalId);
+        }
+
+        setOrderTryonUrl(response?.order?.tryon_url);
         setImageUrl(response?.order?.garment_url);
       }
     } catch (error) {}
   };
 
+  const handleGetOrderstryonupdate = async (id: string) => {
+    try {
+      let response = await context?.getOrderstryonupdate(id);
+      if (response?.message) {
+        handleUpdateImgae(id);
+      }
+      console.log(response);
+    } catch (error) {}
+  };
+
+  const handleUpdateImgae = async (id: any) => {
+    try {
+      let response = await context?.getOrders(id);
+      if (response?.order) {
+        if (response?.order?.tryon_url !== null) {
+          setLoader(false);
+        }
+
+        setOrderTryonUrl(response?.order?.tryon_url);
+        setImageUrl(response?.order?.garment_url);
+      }
+    } catch (error) {}
+  };
   // function getOrdersInterval(id: string) {
   //   return function () {
   //     handleGetOrders(id);
   //   };
   // }
-
   // useEffect(() => {
-  //   if (orderStatus === "inprogress") {
-  //     setInterval(getOrdersInterval(orderId), 5000);
+  //   let intervalId;
+
+  //   if (orderTryonUrl === null || orderTryonUrl === " ") {
+  //     intervalId = setInterval(() => {
+  //       getOrdersInterval(orderId);
+  //     }, 5000);
+  //   } else {
+  //     clearInterval(intervalId);
   //   }
-  // }, [orderStatus]);
+  //   // if (orderTryonUrl === null || orderTryonUrl === " ") {
+  //   //   const id: any = setInterval(getOrdersInterval(orderId), 5000);
+  //   //   setIntervalId(id);
+  //   // }
+
+  //   // return () => clearInterval(intervalId);
+  // }, [orderTryonUrl]);
+
+  console.log(loader, "loaderloader", orderTryonUrl);
+
   return (
     <div className=" h-100 p-4 d-flex justify-content-center align-items-center flex-column">
       <div className=" upload-card d-flex justify-content-center align-items-center">
@@ -82,10 +128,16 @@ const ImageUploader = ({
             </>
           )}
         </div>
-        {imageUrl && (
-          <div className="w-100 h-100">
-            <img src={imageUrl} alt="Uploaded" width="100%" height="100%" />
-          </div>
+        {loader ? (
+          <div className="loader"></div>
+        ) : (
+          <>
+            {imageUrl && (
+              <div className="w-100 h-100">
+                <img src={imageUrl} alt="Uploaded" width="100%" height="100%" />
+              </div>
+            )}
+          </>
         )}
       </div>
       {imageUrl && (
@@ -103,6 +155,7 @@ const ImageUploader = ({
             </Button>
             <Button
               variant="outline-success"
+              disabled={loader}
               onClick={() => context?.setActiveSection("1")}
             >
               Go to next

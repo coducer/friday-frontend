@@ -6,11 +6,13 @@ import Modals from "./Modal/Modals";
 import ImageUploader from "./Modal/ImageUploader";
 import { DashboardProvider, useDashboards } from "./DashboardProvider";
 import { useState } from "react";
+import Header from "./Header";
 
 function Dashboard() {
   return (
     <>
       <DashboardProvider>
+        <Header />
         <DashboardSection />
       </DashboardProvider>
     </>

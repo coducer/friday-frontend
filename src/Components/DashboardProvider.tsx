@@ -7,6 +7,7 @@ interface DashboardContextInterface {
   getOrders: Function;
   setActiveSection: (data: string) => void;
   activeScection: string;
+  getOrderstryonupdate: Function;
 }
 
 const DashboardContext = React.createContext<DashboardContextInterface | null>(
@@ -43,6 +44,12 @@ const DashboardProvider = ({ children }: ListDashboardProviderProps) => {
     } catch (error) {}
   };
 
+  const getOrderstryonupdate = async (id: string) => {
+    try {
+      let response = await api?.tryonupdate(id);
+      return response;
+    } catch (error) {}
+  };
   const value: DashboardContextInterface = useMemo(
     () => ({
       handleModals,
@@ -50,6 +57,7 @@ const DashboardProvider = ({ children }: ListDashboardProviderProps) => {
       getOrders,
       setActiveSection,
       activeScection,
+      getOrderstryonupdate,
     }),
     [activeScection]
   );
