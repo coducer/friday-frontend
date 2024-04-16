@@ -64,10 +64,10 @@ const ImageUploader = ({
     if (orderTryonUrl === null || orderTryonUrl === " ") {
       const id: any = setInterval(getOrdersInterval(orderId), 5000);
       setIntervalId(id);
+      return () => {
+        clearTimeout(id);
+      };
     }
-    return () => {
-      clearTimeout(intervalId);
-    };
   }, [orderTryonUrl]);
 
   console.log(loader, "loaderloader", orderTryonUrl);
