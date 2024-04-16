@@ -183,6 +183,50 @@ body {
   }
 } */
 
+textarea {
+  min-height: 88px !important;
+  border: 1px solid var(--border) !important;
+  background: transparent !important;
+  padding-inline-start: 10px;
+  width: 100%;
+}
+textarea:focus-visible {
+  outline: none !important;
+}
+.img-veiwer {
+  height: 200px;
+  margin-top: 10px;
+}
+.img-veiwer img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.img-feild {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5px;
+}
+.img-feild:hover {
+  background-color: var(--danger);
+  color: var(--bgColor);
+  cursor: pointer;
+}
+.imgveiwerdown {
+  height: 400px;
+}
+.imgveiwerdown img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.sidebar-height {
+  height: 80vh;
+  overflow-y: scroll;
+}
 .loader {
   --d: 22px;
   width: 4px;
@@ -206,4 +250,38 @@ body {
 
 .app-header {
   /* background-color: var(--bgColor); */
+}
+
+/* .spannnn {
+  width: 250px;
+  height: 250px;
+  background-image: url("../src/assest/4d.jpeg");
+  background-size: cover;
+  margin: 10px;
+  zoom: 3.9;
+}
+.spannnn:nth-child(1) {
+  background-position-x: 0;
+}
+.spannnn:nth-child(2) {
+  background-position-x: -75px;
+}
+.spannnn:nth-child(3) {
+  background-position-x: -150px;
+}
+.spannnn:nth-child(4) {
+  background-position-x: -255px;
+} */
+
+.image-container {
+  width: 400px; /* Width of the container */
+  height: 400px; /* Height of the container */
+  background-image: url("../src/assest/4d.jpeg"); /* URL of your image */
+  background-size: 200% 200%; /* Twice the width and height of the container */
+}
+.image-part {
+  width: 50%; /* Width of each part (half of the container) */
+  height: 50%; /* Height of each part (half of the container) */
+  float: left; /* Float the parts to arrange them in a grid */
+  background-position: -100% -100%; /* Position the background to show the correct part */
 }

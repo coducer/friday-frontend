@@ -74,5 +74,11 @@ export const api = {
   },
 
   getOrder: (id: any) => get(`${BASE_URL}/order/${id}`),
-  tryonupdate: (id: any) => get(`${BASE_URL}/order/tryonupdate/${id}`),
+
+  generateImage: async (params: any) => {
+    try {
+      const response = await post(`${BASE_URL}/generate_image`, params);
+      return response;
+    } catch (error) {}
+  },
 };

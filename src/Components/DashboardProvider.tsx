@@ -7,7 +7,7 @@ interface DashboardContextInterface {
   getOrders: Function;
   setActiveSection: (data: string) => void;
   activeScection: string;
-  getOrderstryonupdate: Function;
+  generateImagePrompts: Function;
 }
 
 const DashboardContext = React.createContext<DashboardContextInterface | null>(
@@ -19,7 +19,7 @@ interface ListDashboardProviderProps {
 }
 
 const DashboardProvider = ({ children }: ListDashboardProviderProps) => {
-  const [activeScection, setActiveSection] = useState("1");
+  const [activeScection, setActiveSection] = useState("0");
 
   const handleModals = async () => {
     try {
@@ -44,9 +44,9 @@ const DashboardProvider = ({ children }: ListDashboardProviderProps) => {
     } catch (error) {}
   };
 
-  const getOrderstryonupdate = async (id: string) => {
+  const generateImagePrompts = async (params: any) => {
     try {
-      let response = await api?.tryonupdate(id);
+      let response = await api?.generateImage(params);
       return response;
     } catch (error) {}
   };
@@ -57,7 +57,7 @@ const DashboardProvider = ({ children }: ListDashboardProviderProps) => {
       getOrders,
       setActiveSection,
       activeScection,
-      getOrderstryonupdate,
+      generateImagePrompts,
     }),
     [activeScection]
   );

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { useDashboards } from "../DashboardProvider";
 import { Button } from "react-bootstrap";
@@ -44,10 +44,9 @@ const ImageUploader = ({
       let response = await context?.getOrders(id);
 
       if (response?.order) {
-        handleGetOrderstryonupdate(id);
         if (response?.order?.tryon_url !== null) {
           setLoader(false);
-          // clearInterval(intervalId);
+          clearInterval(intervalId);
         }
 
         setOrderTryonUrl(response?.order?.tryon_url);
@@ -56,51 +55,20 @@ const ImageUploader = ({
     } catch (error) {}
   };
 
-  const handleGetOrderstryonupdate = async (id: string) => {
-    try {
-      let response = await context?.getOrderstryonupdate(id);
-      if (response?.message) {
-        handleUpdateImgae(id);
-      }
-      console.log(response);
-    } catch (error) {}
-  };
-
-  const handleUpdateImgae = async (id: any) => {
-    try {
-      let response = await context?.getOrders(id);
-      if (response?.order) {
-        if (response?.order?.tryon_url !== null) {
-          setLoader(false);
-        }
-
-        setOrderTryonUrl(response?.order?.tryon_url);
-        setImageUrl(response?.order?.garment_url);
-      }
-    } catch (error) {}
-  };
-  // function getOrdersInterval(id: string) {
-  //   return function () {
-  //     handleGetOrders(id);
-  //   };
-  // }
-  // useEffect(() => {
-  //   let intervalId;
-
-  //   if (orderTryonUrl === null || orderTryonUrl === " ") {
-  //     intervalId = setInterval(() => {
-  //       getOrdersInterval(orderId);
-  //     }, 5000);
-  //   } else {
-  //     clearInterval(intervalId);
-  //   }
-  //   // if (orderTryonUrl === null || orderTryonUrl === " ") {
-  //   //   const id: any = setInterval(getOrdersInterval(orderId), 5000);
-  //   //   setIntervalId(id);
-  //   // }
-
-  //   // return () => clearInterval(intervalId);
-  // }, [orderTryonUrl]);
+  function getOrdersInterval(id: string) {
+    return function () {
+      handleGetOrders(id);
+    };
+  }
+  useEffect(() => {
+    if (orderTryonUrl === null || orderTryonUrl === " ") {
+      const id: any = setInterval(getOrdersInterval(orderId), 5000);
+      setIntervalId(id);
+    }
+    return () => {
+      clearTimeout(intervalId);
+    };
+  }, [orderTryonUrl]);
 
   console.log(loader, "loaderloader", orderTryonUrl);
 
