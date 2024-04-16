@@ -50,7 +50,7 @@ const ImageUploader = ({
         }
 
         setOrderTryonUrl(response?.order?.tryon_url);
-        setImageUrl(response?.order?.garment_url);
+        setImageUrl(response?.order?.tryon_url);
       }
     } catch (error) {}
   };
