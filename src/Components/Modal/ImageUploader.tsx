@@ -86,8 +86,6 @@ const ImageUploader = ({
 
   useEffect(() => {}, []);
 
-  console.log(loader, "loaderloader", orderTryonUrl);
-
   return (
     <div className=" h-100 p-4 d-flex justify-content-center align-items-center flex-column">
       <div className=" upload-card d-flex justify-content-center align-items-center">
