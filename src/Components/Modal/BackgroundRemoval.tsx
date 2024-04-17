@@ -24,30 +24,20 @@ const BackgroundRemoval = () => {
       const canvas = document.createElement("canvas");
       const ctx: any = canvas.getContext("2d");
 
-      // Set canvas dimensions to match image dimensions
       canvas.width = img.width;
       canvas.height = img.height;
 
-      // Draw the image on the canvas
       ctx.drawImage(img, 0, 0);
 
-      // Get image data from the canvas
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       const data = imageData.data;
-
-      // Loop through each pixel in the image
       for (let i = 0; i < data.length; i += 4) {
-        // Check if pixel is close to white (adjust threshold as needed)
         if (data[i] > 200 && data[i + 1] > 200 && data[i + 2] > 200) {
-          // Make the pixel transparent
           data[i + 3] = 0;
         }
       }
 
-      // Put the modified image data back on the canvas
       ctx.putImageData(imageData, 0, 0);
-
-      // Convert canvas to data URL and set as processed image
       setProcessedImage(canvas.toDataURL());
 
       setLoading(false);

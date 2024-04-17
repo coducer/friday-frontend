@@ -8,7 +8,6 @@ import { DashboardProvider, useDashboards } from "./DashboardProvider";
 import { useState } from "react";
 import Header from "./Header";
 import Prompts from "./Modal/Prompts";
-// import CropingPromptsImages from "./Modal/CropingPromptsImages";
 
 function Dashboard() {
   return (
@@ -59,7 +58,6 @@ const DashboardSection = () => {
                 activeModalId={activeModalId}
                 selectedModalId={selectedModalId}
               />
-              {/* <CropingPromptsImages /> */}
 
               {/* <div>
                 <div className=" d-flex">

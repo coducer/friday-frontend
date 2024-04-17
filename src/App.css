@@ -227,31 +227,22 @@ textarea:focus-visible {
   height: 80vh;
   overflow-y: scroll;
 }
+
 .loader {
-  --d: 22px;
-  width: 4px;
-  height: 4px;
+  width: 50px;
+  aspect-ratio: 1;
   border-radius: 50%;
-  color: #25b09b;
-  box-shadow: calc(1 * var(--d)) calc(0 * var(--d)) 0 0,
-    calc(0.707 * var(--d)) calc(0.707 * var(--d)) 0 1px,
-    calc(0 * var(--d)) calc(1 * var(--d)) 0 2px,
-    calc(-0.707 * var(--d)) calc(0.707 * var(--d)) 0 3px,
-    calc(-1 * var(--d)) calc(0 * var(--d)) 0 4px,
-    calc(-0.707 * var(--d)) calc(-0.707 * var(--d)) 0 5px,
-    calc(0 * var(--d)) calc(-1 * var(--d)) 0 6px;
-  animation: l27 1s infinite steps(8);
+  background: radial-gradient(farthest-side, #ffa516 94%, #0000) top/8px 8px
+      no-repeat,
+    conic-gradient(#0000 30%, #ffa516);
+  -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
+  animation: l13 1s infinite linear;
 }
-@keyframes l27 {
+@keyframes l13 {
   100% {
     transform: rotate(1turn);
   }
 }
-
-.app-header {
-  /* background-color: var(--bgColor); */
-}
-
 /* .spannnn {
   width: 250px;
   height: 250px;
@@ -284,4 +275,23 @@ textarea:focus-visible {
   height: 50%; /* Height of each part (half of the container) */
   float: left; /* Float the parts to arrange them in a grid */
   background-position: -100% -100%; /* Position the background to show the correct part */
+}
+
+.picture-divider {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  width: 900px;
+  height: 900px;
+}
+
+.grid-item {
+  border: 1px solid #000;
+  overflow: hidden; /* Ensure images don't overflow */
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Maintain aspect ratio */
 }

@@ -4,7 +4,8 @@ import { useDashboards } from "../DashboardProvider";
 import { Button } from "react-bootstrap";
 import { MdRestore } from "react-icons/md";
 import { FaArrowRightLong } from "react-icons/fa6";
-
+import { generatePath, useNavigate, useParams } from "react-router-dom";
+import { routes } from "../../utils/routes";
 const ImageUploader = ({
   activeModalId,
   selectedModalId,
@@ -13,6 +14,8 @@ const ImageUploader = ({
   selectedModalId: string;
 }) => {
   const context = useDashboards();
+  const navigate = useNavigate();
+  const { orderID } = useParams();
   const [imageUrl, setImageUrl] = useState("");
   const [loader, setLoader]: [boolean, Function] = useState(false);
   const fileInputRef = useRef(null);
@@ -35,6 +38,11 @@ const ImageUploader = ({
       if (response?.data?.status) {
         setOrderId(response?.data?.data?.id);
         handleGetOrders(response?.data?.data?.id);
+        navigate(
+          generatePath(routes.orderId, {
+            orderID: response?.data?.data?.id,
+          })
+        );
       }
     } catch (error) {}
   };
@@ -52,6 +60,12 @@ const ImageUploader = ({
       }
     } catch (error) {}
   };
+
+  useEffect(() => {
+    if (orderID) {
+      handleGetOrders(orderID);
+    }
+  }, [orderID]);
 
   function getOrdersInterval(id: string) {
     return function () {
@@ -76,7 +90,10 @@ const ImageUploader = ({
   };
   useEffect(() => {
     if (orderTryonUrl === null || orderTryonUrl === " ") {
-      const id: any = setInterval(getOrdersInterval(orderId), 5000);
+      const id: any = setInterval(
+        getOrdersInterval(orderID ? orderID : orderId),
+        5000
+      );
       setIntervalId(id);
       return () => {
         clearTimeout(id);
@@ -136,7 +153,7 @@ const ImageUploader = ({
                   variant="outline-success"
                   disabled={loader}
                   onClick={() => {
-                    handleTryonUrl(orderId);
+                    handleTryonUrl(orderID);
                   }}
                 >
                   Submit

@@ -1,5 +1,4 @@
 import { Col, Row } from "react-bootstrap";
-import { api } from "../../api";
 import { useEffect, useState } from "react";
 import { useDashboards } from "../DashboardProvider";
 
