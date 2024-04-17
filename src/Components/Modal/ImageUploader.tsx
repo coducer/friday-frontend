@@ -6,11 +6,12 @@ import { MdRestore } from "react-icons/md";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { generatePath, useNavigate, useParams } from "react-router-dom";
 import { routes } from "../../utils/routes";
+import { IModalResponse } from "../../interfaces/response/IModalResponse";
 const ImageUploader = ({
   activeModalId,
   selectedModalId,
 }: {
-  activeModalId: any;
+  activeModalId: IModalResponse | undefined;
   selectedModalId: string;
 }) => {
   const context = useDashboards();
@@ -28,7 +29,7 @@ const ImageUploader = ({
   const handleImageUpload = async (event: any) => {
     const formData = new FormData();
     formData.set("file", event.target.files[0]);
-    formData.set("model", activeModalId?.id);
+    formData.set("model", activeModalId ? activeModalId?.id : "");
     formData.set("category", "female");
     formData.set("sub_category", "top");
 

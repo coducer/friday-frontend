@@ -8,6 +8,7 @@ import { DashboardProvider, useDashboards } from "./DashboardProvider";
 import { useState } from "react";
 import Header from "./Header";
 import Prompts from "./Modal/Prompts";
+import { IModalResponse } from "../interfaces/response/IModalResponse";
 
 function Dashboard() {
   return (
@@ -24,7 +25,10 @@ export default Dashboard;
 
 const DashboardSection = () => {
   const context = useDashboards();
-  const [activeModalId, setActiveModalId]: [string, Function] = useState("");
+  const [activeModalId, setActiveModalId]: [
+    IModalResponse | undefined,
+    Function
+  ] = useState();
   const [selectedModalId, setSelectedModalId] = useState("");
 
   return (

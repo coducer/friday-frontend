@@ -1,6 +1,7 @@
 import { Col, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { useDashboards } from "../DashboardProvider";
+import { IModalResponse } from "../../interfaces/response/IModalResponse";
 
 function Modals({
   setActiveModalId,
@@ -38,21 +39,21 @@ function Modals({
   return (
     <>
       <Row>
-        {modals?.map((el: any) => (
+        {modals?.map((modal: IModalResponse) => (
           <Col
             lg={6}
-            key={el?.id}
+            key={modal?.id}
             onClick={() => {
-              handleModalClick(el?.id, el);
+              handleModalClick(modal?.id, modal);
             }}
             className="mb-3"
           >
             <div
               className={`side-bar-card ${
-                selectedModalId === el?.id ? "active" : ""
+                selectedModalId === modal?.id ? "active" : ""
               }`}
             >
-              <img src={el?.url} height="80px" width="100%" alt="Modal" />
+              <img src={modal?.url} height="80px" width="100%" alt="Modal" />
             </div>
           </Col>
         ))}
