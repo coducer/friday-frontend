@@ -44,9 +44,9 @@ const DashboardProvider = ({ children }: ListDashboardProviderProps) => {
     } catch (error) {}
   };
 
-  const generateImagePrompts = async (params: any) => {
+  const generateImagePrompts = async (params: any, orderId: string) => {
     try {
-      let response = await api?.generateImage(params);
+      let response = await api?.generateImage(params, orderId);
       return response;
     } catch (error) {}
   };

@@ -7,6 +7,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { generatePath, useNavigate, useParams } from "react-router-dom";
 import { routes } from "../../utils/routes";
 import { IModalResponse } from "../../interfaces/response/IModalResponse";
+import FinalOutput from "./FinalOutput";
 const ImageUploader = ({
   activeModalId,
   selectedModalId,
@@ -112,7 +113,8 @@ const ImageUploader = ({
             <>
               {!loader && (
                 <>
-                  <h6 className=" text-center">
+                  <FinalOutput />
+                  {/* <h6 className=" text-center">
                     <AiOutlineCloudUpload size={40} color="var(--iconColor)" />
                   </h6>
 
@@ -127,7 +129,7 @@ const ImageUploader = ({
                         className="image_uploaded"
                       />
                     </Button>
-                  </div>
+                  </div> */}
                 </>
               )}
             </>
@@ -145,6 +147,26 @@ const ImageUploader = ({
           </>
         )}
       </div>
+      <Button
+        className=" me-3"
+        variant="outline-danger"
+        onClick={() => setImageUrl("")}
+      >
+        <span className=" me-2">
+          <MdRestore size={20} />
+        </span>
+        Restore
+      </Button>
+      <Button
+        variant="outline-success"
+        // disabled={loader}
+        onClick={() => context?.setActiveSection("1")}
+      >
+        Go to next
+        <span className=" ms-2">
+          <FaArrowRightLong size={20} />
+        </span>
+      </Button>
       {imageUrl && (
         <>
           <div className=" d-flex mt-3">
